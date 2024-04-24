@@ -1,0 +1,31 @@
+.navbar{
+  background-color: #08107D;
+  width:  282px;
+  height: 1000px;
+  text-align: center;
+  color:  white;
+  h2{
+    margin-bottom: 0px;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  .user-admin{
+    font-size: 3rem;
+  }
+
+  .navbar-link{
+    text-decoration:  none;
+    color: white;
+   
+  }
+  .navbar-link-item{
+    margin: 10px 0;
+    padding: 10px;
+    &:hover{
+      background-color: #121953;
+    }
+  }
+  .navbar-link-text{
+    margin-left: 10px;
+  }
+}

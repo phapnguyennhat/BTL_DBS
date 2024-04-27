@@ -1,9 +1,9 @@
 import Home from "~/pages/Home";
-import User from "~/pages/User";
+import Student from "~/pages/Student";
 
 const publicRoutes = [
   { path: "/", component: Home },
-  { path: "/user", component: User },
+  { path: "/student", component: Student },
 ];
 
 const privateRoutes = [];

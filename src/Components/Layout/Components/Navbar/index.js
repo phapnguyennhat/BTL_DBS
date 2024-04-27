@@ -17,10 +17,16 @@ function Navbar() {
           <span className={cx("navbar-link-text")}>Trang Chủ</span>
         </div>
       </Link>
-      <Link to="/user" className={cx("navbar-link")}>
+      <Link to="/student" className={cx("navbar-link")}>
         <div className={cx("navbar-link-item")}>
           <i class="fa-solid fa-users"></i>
-          <span className={cx("navbar-link-text")}>Người Dùng</span>
+          <span className={cx("navbar-link-text")}>Học Viên</span>
+        </div>
+      </Link>
+      <Link to="/teacher" className={cx("navbar-link")}>
+        <div className={cx("navbar-link-item")}>
+          <i class="fa-solid fa-users"></i>
+          <span className={cx("navbar-link-text")}>Giảng Viên</span>
         </div>
       </Link>
     </div>

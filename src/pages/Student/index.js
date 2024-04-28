@@ -9,6 +9,8 @@ import ModalStu from "./Components/ModalStu";
 import { resolvePath } from "react-router-dom";
 import { GET_STUDENT, get_Student } from "~/services/API_DBS";
 import ConfirmDelete from "~/Components/ConfirmDelete";
+import { convertFieldResponseIntoMuiTextFieldProps } from "@mui/x-date-pickers/internals";
+import ListCourse from "./Components/ListCourse";
 
 const cx = classNames.bind(styles);
 function Student() {
@@ -44,7 +46,7 @@ function Student() {
           fullWidth
         />
       </div>
-      <table className={cx("table-stu")}>
+      <table className="table-big">
         <thead>
           <th>ID</th>
           <th>Họ Và Tên</th>
@@ -83,15 +85,15 @@ function Student() {
           dataStu={dataStu}
         />
       )}
-      {
-        <ConfirmDelete
-          displayConfirm={displayConfirm}
-          setDisplayConfirm={setDisplayConfirm}
-          rowToAction={rowToAction}
-          student
-          setDataStu={setDataStu}
-        />
-      }
+
+      <ConfirmDelete
+        displayConfirm={displayConfirm}
+        setDisplayConfirm={setDisplayConfirm}
+        rowToAction={rowToAction}
+        student
+        setDataStu={setDataStu}
+      />
+      {/* <ListCourse /> */}
     </div>
   );
 }

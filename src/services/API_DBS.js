@@ -11,6 +11,22 @@ export const get_Student = async () => {
   const response = await fetch(GET_STUDENT);
   return response.json();
 };
+
+export const update_Student = async (data) => {
+  let url = GET_STUDENT + data.studentId;
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("NetWork response was not ok: " + response.statusText);
+    }
+    return response.json();
+  });
+};
 export const post_Student = async (data) => {
   const response = await fetch(POST_STUDENT, {
     method: "POST", // Phương thức HTTP

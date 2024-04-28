@@ -36,7 +36,7 @@ function Teacher() {
           fullWidth
         />
       </div>
-      <table className={cx("table-teacher")}>
+      <table className="table-big">
         <thead>
           <th>ID</th>
           <th>Họ Và Tên</th>

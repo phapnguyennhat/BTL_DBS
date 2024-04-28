@@ -14,7 +14,7 @@ import styles from "./ModalStu.module.scss";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { randomNineDigits } from "~/functions";
-import { get_Student, post_Student } from "~/services/API_DBS";
+import { get_Student, post_Student, update_Student } from "~/services/API_DBS";
 const cx = classNames.bind(styles);
 
 function ModalStu({ setDisplayModal, rowToAction, dataStu, setDataStu }) {
@@ -37,18 +37,23 @@ function ModalStu({ setDisplayModal, rowToAction, dataStu, setDataStu }) {
       bdate: "2024-04-28",
     };
     let findStu = dataStu.find((item) => item.studentId === rowToAction);
-    console.log("findstu", findStu);
     if (findStu) setInputForm({ ...findStu });
     else {
       setInputForm({ ...defaultInput });
     }
   }, [rowToAction]);
-  console.log(inputForm);
 
   const isValid = () => {
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regexPhoneNumber = /^0\d{9}$/;
-    if (!regexEmail.test(inputForm.email)) {
+    if (Object.values(inputForm).includes("")) {
+      setMsgError("Vui lòng không để trống thông tin");
+      setDisplayError(true);
+      setTimeout(() => {
+        setDisplayError(false);
+      }, 3000);
+      return false;
+    } else if (!regexEmail.test(inputForm.email)) {
       setMsgError("Email không hợp lệ");
       setDisplayError(true);
       setTimeout(() => {
@@ -63,6 +68,7 @@ function ModalStu({ setDisplayModal, rowToAction, dataStu, setDataStu }) {
       }, 3000);
       return false;
     }
+
     return true;
   };
   const onChangeInput = (e) => {
@@ -72,6 +78,15 @@ function ModalStu({ setDisplayModal, rowToAction, dataStu, setDataStu }) {
     event.preventDefault();
     if (isValid()) {
       if (rowToAction) {
+        update_Student(inputForm)
+          .then(() => {
+            setTimeout(() => {
+              get_Student().then((data) => {
+                setDataStu(data["data"] ?? []);
+              });
+            }, 500); // Đợi 1 giây trước khi gọi get_Student
+          })
+          .catch((error) => console.error("Error:", error));
       } else {
         post_Student(inputForm)
           .then(() => {
@@ -81,9 +96,8 @@ function ModalStu({ setDisplayModal, rowToAction, dataStu, setDataStu }) {
           })
           .catch((error) => console.error("Error:", error)); // Log lỗi nếu có
       }
+      closeModal();
     }
-
-    closeModal();
   };
 
   return (
@@ -154,7 +168,11 @@ function ModalStu({ setDisplayModal, rowToAction, dataStu, setDataStu }) {
                 </div>
                 <div className="col">
                   <label>Giới Tính:</label>
-                  <select value={inputForm.gender} onChange={onChangeInput}>
+                  <select
+                    name="gender"
+                    value={inputForm.gender}
+                    onChange={onChangeInput}
+                  >
                     <option>Male</option>
                     <option>Female</option>
                     <option>Other</option>

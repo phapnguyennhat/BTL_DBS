@@ -1,41 +1,26 @@
-import classNames from "classnames/bind";
-
 function RowData({
-  studentId,
+  lectureId,
   fullName,
   gender,
   email,
-  bdate,
-  addr,
   phoneNumber,
-  setDisplayConfirm,
-  setRowToAction,
-  setDisplayModal,
+  degree,
+  major,
 }) {
   return (
     <tr>
-      <td>{studentId}</td>
+      <td>{lectureId}</td>
       <td>{fullName}</td>
       <td>{gender}</td>
       <td>{email}</td>
       <td>{phoneNumber}</td>
-      <td>{bdate}</td>
-      <td>{addr}</td>
+      <td>{degree}</td>
+      <td>{major}</td>
       <td className="action-data">
-        <button
-          onClick={() => {
-            setRowToAction(studentId);
-            setDisplayModal(true);
-          }}
-        >
+        <button>
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
-        <button
-          onClick={() => {
-            setDisplayConfirm(true);
-            setRowToAction(studentId);
-          }}
-        >
+        <button>
           <i class="fa-solid fa-trash"></i>
         </button>
         {/* <button>
@@ -47,13 +32,13 @@ function RowData({
           </button>
           <ul class="dropdown-menu" style={{}}>
             <li>
-              <a class="dropdown-item" href="abc">
+              <a class="dropdown-item" href="">
                 DS Khóa Học
               </a>
             </li>
             <li>
               <a class="dropdown-item" href="#">
-                DS Hóa Đơn
+                DS RoadMap
               </a>
             </li>
           </ul>

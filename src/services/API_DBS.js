@@ -12,6 +12,12 @@ export const get_Student = async () => {
   return response.json();
 };
 
+export const get_StuCourse = async (studentId) => {
+  const url = GET_STUDENT + studentId + "/courses";
+  const response = await fetch(url);
+  return response.json();
+};
+
 export const update_Student = async (data) => {
   let url = GET_STUDENT + data.studentId;
   fetch(url, {

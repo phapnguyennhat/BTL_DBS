@@ -3,17 +3,29 @@ import style from "./Courses.module.scss";
 import ButtonAdd from "~/Components/ButtonAdd";
 import TextField from "@mui/material/TextField";
 import { useScrollTrigger } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useLocation } from "react-router-dom";
 import ModalFilter from "./ModalFilter";
+import { get_StuCourse } from "~/services/API_DBS";
 
 const cx = classNames.bind(style);
 
 function StuCourses() {
   const [displayFormAdd, setDisplayFormAdd] = useState(false);
   const [display, setDisplay] = useState(false);
+  const [filtered, setFiltered] = useState(false);
+  const [inputFilter, setInputFilter] = useState({});
+  const [dataCourse, setDataCourse] = useState([]);
   const location = useLocation();
   const studentId = location.state.studentId;
+
+  useEffect(() => {
+    get_StuCourse(studentId).then((data) => {
+      setDataCourse(data["data"] ?? []);
+    });
+  }, []);
+
+  // console.log(dataCourse);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       console.log(e.target.value);
@@ -72,26 +84,38 @@ function StuCourses() {
               <td></td>
             </tr>
           )}
-          <tr>
-            <td>KH0000001</td>
-            <td>Lap trinh python co ban</td>
-            <td>99.99</td>
-            <td>123456789</td>
-            <td>basic</td>
-            <td>60.0</td>
-            <td className="action-data">
-              <button>
-                <i class="fa-regular fa-pen-to-square"></i>
-              </button>
-              <button>
-                {" "}
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </td>
-          </tr>
+          {dataCourse.map((course, index) => {
+            return (
+              <tr>
+                <td>{course.courseId}</td>
+                <td>{course.courseName}</td>
+                <td>{course.price}</td>
+                <td>{course.lecturerId}</td>
+                <td>{course.requiredLevel}</td>
+                <td>{course.progress}</td>
+                <td className="action-data">
+                  <button>
+                    <i class="fa-regular fa-pen-to-square"></i>
+                  </button>
+                  <button>
+                    {" "}
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
-      {display && <ModalFilter setDisplay={setDisplay} />}
+      {display && (
+        <ModalFilter
+          setDisplay={setDisplay}
+          filtered={filtered}
+          setFiltered={setFiltered}
+          inputFilter={inputFilter}
+          setInputFilter={setInputFilter}
+        />
+      )}
     </div>
   );
 }

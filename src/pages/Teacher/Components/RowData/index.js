@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 function RowData({
   lectureId,
   fullName,
@@ -6,7 +8,11 @@ function RowData({
   phoneNumber,
   degree,
   major,
+  setDisplayConfirm,
+  setRowToAction,
+  setDisplayModal,
 }) {
+  const navigate = useNavigate();
   return (
     <tr>
       <td>{lectureId}</td>
@@ -17,10 +23,20 @@ function RowData({
       <td>{degree}</td>
       <td>{major}</td>
       <td className="action-data">
-        <button>
+        <button
+          onClick={() => {
+            setRowToAction(lectureId);
+            setDisplayModal(true);
+          }}
+        >
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
-        <button>
+        <button
+          onClick={() => {
+            setDisplayConfirm(true);
+            setRowToAction(lectureId);
+          }}
+        >
           <i class="fa-solid fa-trash"></i>
         </button>
         {/* <button>

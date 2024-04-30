@@ -6,13 +6,17 @@ import RowData from "./Components/RowData";
 import { useEffect, useState } from "react";
 import ModalTea from "./Components/ModalTea";
 import { GET_TEACHER, get_Teacher } from "~/services/API_DBS";
+import ConfirmDelete from "~/Components/ConfirmDelete";
 
 const cx = classNames.bind(styles);
 
 function Teacher() {
   const [displayModal, setDisplayModal] = useState(false);
+  const [displayConfirm, setDisplayConfirm] = useState(false);
   const [rowToAction, setRowToAction] = useState(null);
+
   const [dataTea, setDataTea] = useState([]);
+
   useEffect(() => {
     get_Teacher().then((data) => {
       setDataTea(data["data"] ?? []);
@@ -24,13 +28,16 @@ function Teacher() {
         <h1>Danh Sách Giảng Viên</h1>
         <ButtonAdd
           text={"+ Thêm Giảng Viên"}
-          onclick={() => setDisplayModal(true)}
+          onclick={() => {
+            setDisplayModal(true);
+            setRowToAction(null);
+          }}
         />
       </div>
       <div className="search">
         <TextField
           id="outlined-basic"
-          label="Tìm Kiếm"
+          label="Tìm Kiếm Họ Và Tên"
           variant="outlined"
           autoComplete="off"
           fullWidth
@@ -59,13 +66,30 @@ function Teacher() {
                 phoneNumber={teacher.phoneNumber}
                 degree={teacher.degree}
                 major={teacher.major}
+                setDisplayConfirm={setDisplayConfirm}
+                setRowToAction={setRowToAction}
+                setDisplayModal={setDisplayModal}
               />
             );
           })}
         </tbody>
       </table>
       {displayModal && (
-        <ModalTea setDisplayModal={setDisplayModal} rowToAction={rowToAction} />
+        <ModalTea
+          setDisplayModal={setDisplayModal}
+          rowToAction={rowToAction}
+          dataTea={dataTea}
+          setDataTea={setDataTea}
+        />
+      )}
+      {displayConfirm && (
+        <ConfirmDelete
+          displayConfirm={displayConfirm}
+          setDisplayConfirm={setDisplayConfirm}
+          rowToAction={rowToAction}
+          teacher
+          setDataTea={setDataTea}
+        />
       )}
     </div>
   );

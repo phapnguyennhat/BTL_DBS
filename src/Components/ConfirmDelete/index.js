@@ -4,7 +4,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
-import { delete_Student, get_Student } from "~/services/API_DBS";
+import {
+  delete_Student,
+  delete_Teacher,
+  get_Student,
+  get_Teacher,
+} from "~/services/API_DBS";
 
 export default function ConfirmDelete({
   displayConfirm,
@@ -12,6 +17,8 @@ export default function ConfirmDelete({
   rowToAction,
   student,
   setDataStu,
+  teacher,
+  setDataTea,
 }) {
   const handleClose = () => {
     setDisplayConfirm(false);
@@ -30,6 +37,16 @@ export default function ConfirmDelete({
         .catch((error) => {
           console.error("Delete failed:", error);
           // Xử lý lỗi xảy ra khi thực hiện yêu cầu DELETE
+        });
+    } else if (teacher) {
+      delete_Teacher(rowToAction)
+        .then(() => {
+          get_Teacher().then((data) => {
+            setDataTea(data["data"] ?? []);
+          });
+        })
+        .catch((error) => {
+          console.error("Delete failed: ", error);
         });
     }
 

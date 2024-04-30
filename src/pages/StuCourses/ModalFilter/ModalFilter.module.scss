@@ -17,4 +17,13 @@
   margin: auto;
   background-color: white;
   padding: 24px;
+  .form-data{
+    display: flex;
+    margin-top: 20px;
+  }
+}
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

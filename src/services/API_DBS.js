@@ -56,8 +56,36 @@ export const get_Teacher = async () => {
   return response.json();
 };
 
+export const update_Teacher = async (data) => {
+  let url = GET_TEACHER + data.lecturerId;
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("NetWork response was not ok: " + response.statusText);
+    }
+    return response.json();
+  });
+};
+
+export const post_Teacher = async (data) => {
+  const response = await fetch(POST_TEACHER, {
+    method: "POST", // Phương thức HTTP
+    headers: {
+      "Content-Type": "application/json", // Nội dung của request là JSON
+    },
+    body: JSON.stringify(data), // Chuyển đổi đối tượng JavaScript thành chuỗi JSON
+  });
+  const post = await response.json();
+  return post;
+};
+
 export const delete_Teacher = async (idData) => {
-  let url = delete_Teacher + idData;
+  let url = DELETE_TEACHER + idData;
   const response = await fetch(url, {
     method: "DELETE",
   });

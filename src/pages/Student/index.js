@@ -6,11 +6,10 @@ import ButtonAdd from "~/Components/ButtonAdd";
 import RowData from "./Components/RowData";
 import { useEffect, useState } from "react";
 import ModalStu from "./Components/ModalStu";
-import { resolvePath } from "react-router-dom";
+import { resolvePath, useNavigate } from "react-router-dom";
 import { GET_STUDENT, get_Student } from "~/services/API_DBS";
 import ConfirmDelete from "~/Components/ConfirmDelete";
 import { convertFieldResponseIntoMuiTextFieldProps } from "@mui/x-date-pickers/internals";
-import ListCourse from "./Components/ListCourse";
 
 const cx = classNames.bind(styles);
 function Student() {
@@ -18,6 +17,19 @@ function Student() {
   const [rowToAction, setRowToAction] = useState(null);
   const [displayConfirm, setDisplayConfirm] = useState(false);
   const [dataStu, setDataStu] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const filterData = dataStu.filter((stu) => {
+    if (search === "") {
+      return stu;
+    } else {
+      return (
+        stu.fullName.toLowerCase().includes(search) ||
+        stu.studentId.toLowerCase().includes(search)
+      );
+    }
+  });
+
   useEffect(() => {
     get_Student().then((data) => {
       setDataStu(data["data"] ?? []);
@@ -26,7 +38,7 @@ function Student() {
   return (
     <div className="content">
       <div className="header-page">
-        <h1>Danh sách Học Viên</h1>
+        <h1>Danh Sách Học Viên</h1>
 
         <ButtonAdd
           text={"+ Thêm Học Viên"}
@@ -40,10 +52,13 @@ function Student() {
       <div className="search">
         <TextField
           id="outlined-basic"
-          label="Tìm Kiếm"
+          label="Tìm Kiếm Họ Và Tên, ID"
           variant="outlined"
           autoComplete="off"
           fullWidth
+          onChange={(e) => {
+            setSearch(e.target.value.toLowerCase());
+          }}
         />
       </div>
       <table className="table-big">
@@ -59,7 +74,7 @@ function Student() {
           <th>Thao tác</th>
         </thead>
         <tbody>
-          {dataStu.map((stu, index) => {
+          {filterData.map((stu, index) => {
             return (
               <RowData
                 studentId={stu.studentId}

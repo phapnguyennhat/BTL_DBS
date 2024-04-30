@@ -1,4 +1,5 @@
 import classNames from "classnames/bind";
+import { useNavigate } from "react-router-dom";
 
 function RowData({
   studentId,
@@ -12,6 +13,7 @@ function RowData({
   setRowToAction,
   setDisplayModal,
 }) {
+  const navigate = useNavigate();
   return (
     <tr>
       <td>{studentId}</td>
@@ -47,14 +49,19 @@ function RowData({
           </button>
           <ul class="dropdown-menu" style={{}}>
             <li>
-              <a class="dropdown-item" href="abc">
+              <button
+                onClick={() =>
+                  navigate("courses", {
+                    state: { studentId: studentId },
+                  })
+                }
+                class="dropdown-item"
+              >
                 DS Khóa Học
-              </a>
+              </button>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
-                DS Hóa Đơn
-              </a>
+              <button class="dropdown-item">DS Hóa Đơn</button>
             </li>
           </ul>
         </div>

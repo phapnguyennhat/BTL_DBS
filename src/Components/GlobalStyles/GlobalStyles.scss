@@ -91,3 +91,13 @@ button{
   padding: 6px;
 }
 }
+
+.action-table{
+  display:  flex;
+  justify-content: space-between;
+  width: 100%;
+  button{
+    border-radius: 4px;
+    width: 120px
+  }
+}

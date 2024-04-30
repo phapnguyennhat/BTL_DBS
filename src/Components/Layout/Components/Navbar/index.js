@@ -29,6 +29,12 @@ function Navbar() {
           <span className={cx("navbar-link-text")}>Giảng Viên</span>
         </div>
       </Link>
+      <Link to="/courses" className={cx("navbar-link")}>
+        <div className={cx("navbar-link-item")}>
+          <i class="fa-solid fa-book"></i>
+          <span className={cx("navbar-link-text")}>Khóa Học</span>
+        </div>
+      </Link>
     </div>
   );
 }

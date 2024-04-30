@@ -13,7 +13,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import styles from "./ModalStu.module.scss";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { randomNineDigits } from "~/functions";
+import { isValidAge, randomNineDigits } from "~/functions";
 import { get_Student, post_Student, update_Student } from "~/services/API_DBS";
 const cx = classNames.bind(styles);
 
@@ -62,6 +62,13 @@ function ModalStu({ setDisplayModal, rowToAction, dataStu, setDataStu }) {
       return false;
     } else if (!regexPhoneNumber.test(inputForm.phoneNumber)) {
       setMsgError("Số điện thoại không hợp lệ");
+      setDisplayError(true);
+      setTimeout(() => {
+        setDisplayError(false);
+      }, 3000);
+      return false;
+    } else if (!isValidAge(inputForm.bdate)) {
+      setMsgError("Học viên chưa đủ 18 tuổi");
       setDisplayError(true);
       setTimeout(() => {
         setDisplayError(false);
@@ -216,7 +223,12 @@ function ModalStu({ setDisplayModal, rowToAction, dataStu, setDataStu }) {
                         name="bdate"
                         format="YYYY-MM-DD"
                         value={dayjs(inputForm.bdate, "YYYY-MM-DD")}
-                        onChange={onChangeInput}
+                        onChange={(newDate) => {
+                          setInputForm({
+                            ...inputForm,
+                            bdate: dayjs(newDate).format("YYYY-MM-DD"),
+                          });
+                        }}
                       />
                     </FormControl>
                   </LocalizationProvider>

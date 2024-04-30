@@ -7,14 +7,21 @@ const GET_TEACHER = "http://localhost:8080/api/v1/lecturers/";
 const POST_TEACHER = "http://localhost:8080/api/v1/lecturers/create-lecturer";
 const DELETE_TEACHER = "http://localhost:8080/api/v1/lecturers/";
 
+const GET_COURSES = "http://localhost:8080/api/v1/courses/";
+
 export const get_Student = async () => {
   const response = await fetch(GET_STUDENT);
   return response.json();
 };
 
-export const get_StuCourse = async (studentId) => {
+export const get_StuCourse = async (studentId, params) => {
   const url = GET_STUDENT + studentId + "/courses";
-  const response = await fetch(url);
+  const filteredParams = Object.fromEntries(
+    Object.entries(params).filter(([key, value]) => value !== "")
+  );
+  const queryString = new URLSearchParams(filteredParams).toString();
+  const apiUrl = `${url}?${queryString}`;
+  const response = await fetch(apiUrl);
   return response.json();
 };
 
@@ -98,5 +105,10 @@ export const delete_Teacher = async (idData) => {
   if (!response.ok) {
     throw new Error("Network response was not ok" + response.statusText);
   }
+  return response.json();
+};
+
+export const get_courses = async () => {
+  const response = await fetch(GET_COURSES);
   return response.json();
 };

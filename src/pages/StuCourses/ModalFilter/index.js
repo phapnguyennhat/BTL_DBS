@@ -9,8 +9,7 @@ import Select from "@mui/material/Select";
 const cx = classNames.bind(styles);
 function ModalFilter({
   setDisplay,
-  filtered,
-  setFiltered,
+
   inputFilter,
   setInputFilter,
 }) {
@@ -19,6 +18,26 @@ function ModalFilter({
       return { ...prev, [event.target.name]: event.target.value };
     });
   };
+  const collectNum = (event) => {
+    if (!isNaN(event.target.value)) {
+      colectData(event);
+    }
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setDisplay(false);
+    setInputFilter({ ...inputFilter, searchFlag: true });
+  };
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+
+    setDisplay(false);
+    setInputFilter({ ...inputFilter, searchFlag: false });
+
+    setInputFilter({});
+  };
+
   return (
     <div
       className={cx("background")}
@@ -32,7 +51,7 @@ function ModalFilter({
         <div className={cx("header")}>
           <h3>Filters</h3>
         </div>
-        <form className="container">
+        <div className="container">
           <div className="row">
             <div className="col">
               <TextField
@@ -41,8 +60,10 @@ function ModalFilter({
                 variant="standard"
                 autoComplete="off"
                 fullWidth
-                name="id_teacher"
+                name="lecturerId"
                 onChange={colectData}
+                value={inputFilter.lecturerId}
+                // disabled={inputFilter.searchFlag}
               />
             </div>
 
@@ -56,11 +77,12 @@ function ModalFilter({
                   id="demo-simple-select"
                   // value={age}
                   label="Trình độ yêu cầu"
-                  name="requered_level"
+                  name="requiredLevel"
                   // onChange={handleChange}
+                  value={`${inputFilter.requiredLevel}`}
                   onChange={colectData}
+                  // disabled={inputFilter.searchFlag}
                 >
-                  <MenuItem value={null}>None</MenuItem>
                   <MenuItem value={"Beginer"}>Beginer</MenuItem>
                   <MenuItem value={"Intermediate"}>Intermediate</MenuItem>
                   <MenuItem value={"Expert"}>Expert</MenuItem>
@@ -71,9 +93,21 @@ function ModalFilter({
           <div className="row align-items-end">
             <div className="col-9 range-input">
               <label style={{ paddingRight: "10px" }}>Khoảng giá: </label>
-              <input name="price_from" placeholder="Từ $"></input>
+              <input
+                value={inputFilter.priceS}
+                name="priceS"
+                placeholder="Từ $"
+                onChange={collectNum}
+                // disabled={inputFilter.searchFlag}
+              ></input>
               <i class="fa-solid fa-minus" style={{ padding: "0px 10px" }}></i>
-              <input name="price_to" placeholder="Đến $"></input>
+              <input
+                value={inputFilter.priceE}
+                name="priceE"
+                placeholder="Đến $"
+                onChange={collectNum}
+                // disabled={inputFilter.searchFlag}
+              ></input>
             </div>
             <div className="col-3">
               <FormControl fullWidth variant="standard">
@@ -83,11 +117,13 @@ function ModalFilter({
                   id="demo-simple-select"
                   // value={age}
                   label="Giá tiền"
-                  name="order_price"
+                  name="sortBy"
                   onChange={colectData}
+                  value={`${inputFilter.sortBy}`}
+                  // disabled={inputFilter.searchFlag}
+
                   // onChange={handleChange}
                 >
-                  <MenuItem value={null}>None</MenuItem>
                   <MenuItem value={"ASC"}>Giá: thấp đến cao</MenuItem>
                   <MenuItem value={"DESC"}>Giá: cao đến thấp</MenuItem>
                 </Select>
@@ -95,11 +131,23 @@ function ModalFilter({
             </div>
           </div>
           <div className="row align-items-end">
-            <div className="col-9 range-input">
+            <div className="col-9 range-input" style={{ paddingTop: "10px" }}>
               <label style={{ paddingRight: "10px" }}>Khoảng Tiến Độ: </label>
-              <input name="progress_from" placeholder="Từ %"></input>
+              <input
+                value={inputFilter.progressS}
+                name="progressS"
+                placeholder="Từ %"
+                onChange={collectNum}
+                // disabled={inputFilter.searchFlag}
+              ></input>
               <i class="fa-solid fa-minus" style={{ padding: "0px 10px" }}></i>
-              <input name="progress_to" placeholder="Đến %"></input>
+              <input
+                value={inputFilter.progressE}
+                name="progressE"
+                placeholder="Đến %"
+                onChange={collectNum}
+                // disabled={inputFilter.searchFlag}
+              ></input>
             </div>
             <div className="col-3">
               {/* <FormControl fullWidth variant="standard">
@@ -120,9 +168,19 @@ function ModalFilter({
             </div>
           </div>
           <div className={cx("action-btn")}>
-            {filtered ? <button>Bỏ Lọc</button> : <button>Áp Dụng</button>}
+            <button
+              type="submit"
+              onClick={handleCancel}
+              style={{ color: "red" }}
+            >
+              Bỏ Lọc
+            </button>
+
+            <button type="submit" onClick={handleSubmit}>
+              Áp Dụng
+            </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

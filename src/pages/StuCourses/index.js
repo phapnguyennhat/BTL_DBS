@@ -7,23 +7,34 @@ import { useEffect, useState, useTransition } from "react";
 import { useLocation } from "react-router-dom";
 import ModalFilter from "./ModalFilter";
 import { get_StuCourse } from "~/services/API_DBS";
+import RowData from "./RowData";
 
 const cx = classNames.bind(style);
 
 function StuCourses() {
   const [displayFormAdd, setDisplayFormAdd] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [filtered, setFiltered] = useState(false);
-  const [inputFilter, setInputFilter] = useState({});
+  const [inputFilter, setInputFilter] = useState({
+    searchFlag: false,
+    lecturerId: "",
+    requiredLevel: "",
+    priceS: "",
+    priceE: "",
+    sortBy: "",
+    progressS: "",
+    progressE: "",
+  });
   const [dataCourse, setDataCourse] = useState([]);
   const location = useLocation();
   const studentId = location.state.studentId;
 
   useEffect(() => {
-    get_StuCourse(studentId).then((data) => {
+    get_StuCourse(studentId, inputFilter).then((data) => {
       setDataCourse(data["data"] ?? []);
     });
-  }, []);
+  }, [inputFilter]);
+
+  console.log(dataCourse);
 
   // console.log(dataCourse);
   const handleKeyDown = (e) => {
@@ -70,7 +81,7 @@ function StuCourses() {
             <tr>
               <td>
                 <input
-                  style={{ textAlign: "center" }}
+                  style={{ textAlign: "center", width: "110px" }}
                   placeholder="ID Khóa Học"
                   onKeyDown={handleKeyDown}
                   autoFocus
@@ -85,33 +96,19 @@ function StuCourses() {
             </tr>
           )}
           {dataCourse.map((course, index) => {
-            return (
-              <tr>
-                <td>{course.courseId}</td>
-                <td>{course.courseName}</td>
-                <td>{course.price}</td>
-                <td>{course.lecturerId}</td>
-                <td>{course.requiredLevel}</td>
-                <td>{course.progress}</td>
-                <td className="action-data">
-                  <button>
-                    <i class="fa-regular fa-pen-to-square"></i>
-                  </button>
-                  <button>
-                    {" "}
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
+            let findCourse = course.studentCourses.find(
+              (item) =>
+                item.courseId === course.courseId &&
+                item.studentId === studentId
             );
+
+            return <RowData course={course} progress={findCourse.progress} />;
           })}
         </tbody>
       </table>
       {display && (
         <ModalFilter
           setDisplay={setDisplay}
-          filtered={filtered}
-          setFiltered={setFiltered}
           inputFilter={inputFilter}
           setInputFilter={setInputFilter}
         />

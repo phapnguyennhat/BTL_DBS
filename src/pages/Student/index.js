@@ -52,7 +52,7 @@ function Student() {
       <div className="search">
         <TextField
           id="outlined-basic"
-          label="Tìm Kiếm Họ Và Tên, ID"
+          label="Tìm Kiếm Họ Và Tên Hoặc ID"
           variant="outlined"
           autoComplete="off"
           fullWidth

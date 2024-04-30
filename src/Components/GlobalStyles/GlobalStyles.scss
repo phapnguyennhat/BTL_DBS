@@ -92,6 +92,15 @@ button{
 }
 }
 
+.btn-action-data{
+  button{
+    background-color:  transparent;
+    outline: none;
+    border: none;
+    padding: 6px;
+  }
+}
+
 .action-table{
   display:  flex;
   justify-content: space-between;
@@ -110,3 +119,8 @@ button{
     width: 30%;
   }
 }
+
+
+
+
+

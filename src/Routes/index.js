@@ -2,7 +2,7 @@ import Home from "~/pages/Home";
 import Student from "~/pages/Student";
 import Teacher from "~/pages/Teacher";
 import StuCourses from "~/pages/StuCourses";
-import Courses from "~/Courses";
+import Courses from "~/pages/Courses";
 
 const publicRoutes = [
   { path: "/", component: Home },

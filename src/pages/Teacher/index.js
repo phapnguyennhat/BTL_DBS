@@ -14,8 +14,20 @@ function Teacher() {
   const [displayModal, setDisplayModal] = useState(false);
   const [displayConfirm, setDisplayConfirm] = useState(false);
   const [rowToAction, setRowToAction] = useState(null);
+  const [search, setSearch] = useState("");
 
   const [dataTea, setDataTea] = useState([]);
+
+  const filterData = dataTea.filter((tea) => {
+    if (search === "") {
+      return tea;
+    } else {
+      return (
+        tea.fullName.toLowerCase().includes(search) ||
+        tea.lecturerId.toLowerCase().includes(search)
+      );
+    }
+  });
 
   useEffect(() => {
     get_Teacher().then((data) => {
@@ -41,6 +53,10 @@ function Teacher() {
           variant="outlined"
           autoComplete="off"
           fullWidth
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value.toLowerCase());
+          }}
         />
       </div>
       <table className="table-big">
@@ -56,7 +72,7 @@ function Teacher() {
           <th>Thao tác</th>
         </thead>
         <tbody>
-          {dataTea.map((teacher, index) => {
+          {filterData.map((teacher, index) => {
             return (
               <RowData
                 lectureId={teacher.lecturerId}

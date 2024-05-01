@@ -34,8 +34,6 @@ function StuCourses() {
     });
   }, [inputFilter]);
 
-  console.log(dataCourse);
-
   // console.log(dataCourse);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

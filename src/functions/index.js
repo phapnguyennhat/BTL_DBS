@@ -17,3 +17,10 @@ export function isValidAge(bdate) {
   }
   return true;
 }
+
+export function randomIdCourse() {
+  let numRandom = Math.floor(Math.random() * 10000000)
+    .toString()
+    .padStart(7, "0");
+  return "KH" + numRandom;
+}

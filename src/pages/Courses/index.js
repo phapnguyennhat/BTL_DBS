@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import ButtonAdd from "~/Components/ButtonAdd";
 import TextField from "@mui/material/TextField";
 import { get_courses } from "~/services/API_DBS";
-import RowData from "./RowData";
+import RowData from "./Components/RowData";
+import ModalCourse from "./Components/ModalCourse";
 
 function Courses() {
+  const [displayModal, setDisplayModal] = useState(false);
+  const [displayConfirm, setDisplayConfirm] = useState(false);
   const [dataCourse, setDataCourse] = useState([]);
   const [search, setSearch] = useState("");
+  const [rowToAction, setRowToAction] = useState(null);
 
   const filterData = dataCourse.filter((item) => {
     if (search === "") {
@@ -19,6 +23,8 @@ function Courses() {
     }
   });
 
+  // console.table(dataCourse);
+
   useEffect(() => {
     get_courses().then((data) => {
       setDataCourse(data["data"] ?? []);
@@ -29,7 +35,13 @@ function Courses() {
       <div className="header-page">
         <h1>Danh Sách Khóa Học</h1>
 
-        <ButtonAdd text={"+ Thêm Khoá Học"} />
+        <ButtonAdd
+          text={"+ Thêm Khoá Học"}
+          onclick={() => {
+            setDisplayModal(true);
+            setRowToAction(null);
+          }}
+        />
       </div>
       <div className="search">
         <TextField
@@ -56,10 +68,25 @@ function Courses() {
         </thead>
         <tbody>
           {filterData.map((course, index) => {
-            return <RowData course={course} />;
+            return (
+              <RowData
+                course={course}
+                setDisplayConfirm={setDisplayConfirm}
+                setRowToAction={setRowToAction}
+                setDisplayModal={setDisplayModal}
+              />
+            );
           })}
         </tbody>
       </table>
+      {displayModal && (
+        <ModalCourse
+          setDisplayModal={setDisplayModal}
+          rowToAction={rowToAction}
+          dataCourse={dataCourse}
+          setDataCourse={setDataCourse}
+        />
+      )}
     </div>
   );
 }

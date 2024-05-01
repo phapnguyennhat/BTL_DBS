@@ -98,6 +98,7 @@ function ModalFilter({
                 name="priceS"
                 placeholder="Từ $"
                 onChange={collectNum}
+                autoComplete="off"
                 // disabled={inputFilter.searchFlag}
               ></input>
               <i class="fa-solid fa-minus" style={{ padding: "0px 10px" }}></i>
@@ -106,6 +107,8 @@ function ModalFilter({
                 name="priceE"
                 placeholder="Đến $"
                 onChange={collectNum}
+                autoComplete="off"
+
                 // disabled={inputFilter.searchFlag}
               ></input>
             </div>
@@ -138,6 +141,8 @@ function ModalFilter({
                 name="progressS"
                 placeholder="Từ %"
                 onChange={collectNum}
+                autoComplete="off"
+
                 // disabled={inputFilter.searchFlag}
               ></input>
               <i class="fa-solid fa-minus" style={{ padding: "0px 10px" }}></i>
@@ -146,6 +151,8 @@ function ModalFilter({
                 name="progressE"
                 placeholder="Đến %"
                 onChange={collectNum}
+                autoComplete="off"
+
                 // disabled={inputFilter.searchFlag}
               ></input>
             </div>

@@ -1,3 +1,5 @@
+import { dateTimePickerTabsClasses } from "@mui/x-date-pickers";
+
 const POST_STUDENT = "http://localhost:8080/api/v1/students/create-student";
 
 const GET_STUDENT = "http://localhost:8080/api/v1/students/";
@@ -8,6 +10,7 @@ const POST_TEACHER = "http://localhost:8080/api/v1/lecturers/create-lecturer";
 const DELETE_TEACHER = "http://localhost:8080/api/v1/lecturers/";
 
 const GET_COURSES = "http://localhost:8080/api/v1/courses/";
+const POST_COURSE = "http://localhost:8080/api/v1/courses/create-course";
 
 export const get_Student = async () => {
   const response = await fetch(GET_STUDENT);
@@ -110,5 +113,44 @@ export const delete_Teacher = async (idData) => {
 
 export const get_courses = async () => {
   const response = await fetch(GET_COURSES);
+  return response.json();
+};
+
+export const post_Course = async (data) => {
+  const response = await fetch(POST_COURSE, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const post = await response.json();
+  return post;
+};
+
+export const update_Course = async (data) => {
+  let url = GET_COURSES + data.courseId;
+  fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("NetWork response was not ok: " + response.statusText);
+    }
+    return response.json();
+  });
+};
+
+export const delete_Course = async (idData) => {
+  let url = GET_COURSES + idData;
+  const response = await fetch(url, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Network response was not ok" + response.statusText);
+  }
   return response.json();
 };

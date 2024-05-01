@@ -1,4 +1,9 @@
-function RowData({ course }) {
+function RowData({
+  course,
+  setDisplayConfirm,
+  setRowToAction,
+  setDisplayModal,
+}) {
   return (
     <tr>
       <td>{course.courseId}</td>
@@ -11,16 +16,16 @@ function RowData({ course }) {
       <td style={{ verticalAlign: "middle" }} className="btn-action-data">
         <button
           onClick={() => {
-            // setRowToAction(studentId);
-            // setDisplayModal(true);
+            setRowToAction(course.courseId);
+            setDisplayModal(true);
           }}
         >
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
         <button
           onClick={() => {
-            // setDisplayConfirm(true);
-            // setRowToAction(studentId);
+            setDisplayConfirm(true);
+            setRowToAction(course.courseId);
           }}
         >
           <i class="fa-solid fa-trash"></i>

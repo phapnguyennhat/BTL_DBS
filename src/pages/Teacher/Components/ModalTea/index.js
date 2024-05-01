@@ -88,8 +88,6 @@ function ModalTea({ setDisplayModal, rowToAction, dataTea, setDataTea }) {
   const onChangeInput = (e) => {
     setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
-  console.log(inputForm.major);
-  console.log(typeof inputForm.major);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -186,16 +184,6 @@ function ModalTea({ setDisplayModal, rowToAction, dataTea, setDataTea }) {
                 />
               </div>
               <div className="col">
-                {/* <label>Giới Tính: </label>
-                <select
-                  name="gender"
-                  value={inputForm.gender}
-                  onChange={onChangeInput}
-                >
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Other</option>
-                </select> */}
                 <FormControl fullWidth variant="standard">
                   <InputLabel id="demo-simple-select-label">
                     Giới Tính

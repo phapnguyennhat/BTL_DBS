@@ -3,6 +3,7 @@ import Student from "~/pages/Student";
 import Teacher from "~/pages/Teacher";
 import StuCourses from "~/pages/StuCourses";
 import Courses from "~/pages/Courses";
+import TeaCourses from "~/pages/TeaCourses";
 
 const publicRoutes = [
   { path: "/", component: Home },
@@ -10,6 +11,7 @@ const publicRoutes = [
   { path: "/teacher", component: Teacher },
   { path: "student/courses", component: StuCourses },
   { path: "/courses", component: Courses },
+  { path: "teacher/courses", component: TeaCourses },
 ];
 
 const privateRoutes = [];

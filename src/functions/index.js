@@ -24,3 +24,10 @@ export function randomIdCourse() {
     .padStart(7, "0");
   return "KH" + numRandom;
 }
+
+export function randomIdOrder() {
+  let numRandom = Math.floor(Math.random() * 10000000)
+    .toString()
+    .padStart(7, "0");
+  return "DH" + numRandom;
+}

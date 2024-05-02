@@ -67,7 +67,7 @@ function ModalCourse({
     }
   };
 
-  console.log(inputForm);
+  // console.log(inputForm);
 
   useEffect(() => {
     let findCourse = dataCourse.find(
@@ -214,6 +214,12 @@ function ModalCourse({
             </div>
           </div>
         </form>
+        <div className={cx("action-btn")}>
+          <button type="submit" onClick={handleSubmit}>
+            Lưu
+          </button>
+          <button onClick={closeModal}>Hủy</button>
+        </div>
       </div>
     </div>
   );

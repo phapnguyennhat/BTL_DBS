@@ -16,27 +16,19 @@ const MenuProps = {
   },
 };
 
-const languages = [
-  "Vietnamese",
-  "English",
-  "Chinese",
-  "French",
-  "German",
-  "Italian",
-  "Portuguese",
-  "Spanish",
-];
-
-function SelectLang({ inputForm, setInputForm }) {
-  const theme = useTheme();
+function SelectCourse({ inputForm, setInputForm, dataCourse, courseLearning }) {
   const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const arrayID = dataCourse.map((course) => course.courseId);
+  const arrayIDFilter = arrayID.filter(
+    (item) => !courseLearning.includes(item)
+  );
 
   useEffect(() => {
     // Ensure the component uses the prop value when it mounts
-    if (inputForm.languages) {
-      setSelectedLanguages(inputForm.languages);
+    if (inputForm.courseId) {
+      setSelectedLanguages(inputForm.courseId);
     }
-  }, [inputForm.languages]);
+  }, [inputForm.courseId]);
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -45,7 +37,7 @@ function SelectLang({ inputForm, setInputForm }) {
     // Update the parent component's form state
     setInputForm((prev) => ({
       ...prev,
-      languages: value,
+      courseId: value,
     }));
   };
 
@@ -60,7 +52,7 @@ function SelectLang({ inputForm, setInputForm }) {
           input={<OutlinedInput />}
           renderValue={(selected) => {
             if (selected.length === 0) {
-              return <em>Ngôn Ngữ</em>;
+              return <em>Khoá Học</em>;
             }
             return selected.join(", ");
           }}
@@ -68,9 +60,9 @@ function SelectLang({ inputForm, setInputForm }) {
           inputProps={{ "aria-label": "Without label" }}
         >
           <MenuItem disabled value="">
-            <em>Placeholder</em>
+            <em>Khóa Học</em>
           </MenuItem>
-          {languages.map((name) => (
+          {arrayIDFilter.map((name) => (
             <MenuItem key={name} value={name}>
               {name}
             </MenuItem>
@@ -81,4 +73,4 @@ function SelectLang({ inputForm, setInputForm }) {
   );
 }
 
-export default SelectLang;
+export default SelectCourse;

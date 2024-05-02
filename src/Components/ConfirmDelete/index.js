@@ -5,10 +5,12 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import {
+  delete_Course,
   delete_Student,
   delete_Teacher,
   get_Student,
   get_Teacher,
+  get_courses,
 } from "~/services/API_DBS";
 
 export default function ConfirmDelete({
@@ -19,6 +21,8 @@ export default function ConfirmDelete({
   setDataStu,
   teacher,
   setDataTea,
+  course,
+  setDataCourse,
 }) {
   const handleClose = () => {
     setDisplayConfirm(false);
@@ -43,6 +47,16 @@ export default function ConfirmDelete({
         .then(() => {
           get_Teacher().then((data) => {
             setDataTea(data["data"] ?? []);
+          });
+        })
+        .catch((error) => {
+          console.error("Delete failed: ", error);
+        });
+    } else if (course) {
+      delete_Course(rowToAction)
+        .then(() => {
+          get_courses().then((data) => {
+            setDataCourse(data["data"] ?? []);
           });
         })
         .catch((error) => {

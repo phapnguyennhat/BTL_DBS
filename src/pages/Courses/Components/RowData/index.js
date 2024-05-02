@@ -12,7 +12,7 @@ function RowData({
       <td>{course.requiredLevel}</td>
       <td>{course.price}</td>
       <td>{course.lecturerId}</td>
-      <td>{course.languages}</td>
+      <td>{course.languages.join(" ")}</td>
       <td style={{ verticalAlign: "middle" }} className="btn-action-data">
         <button
           onClick={() => {

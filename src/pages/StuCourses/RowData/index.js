@@ -21,7 +21,7 @@ function RowData({ course, progress }) {
       <td>{course.lecturerId}</td>
       <td>{course.requiredLevel}</td>
       <td>{progress}</td>
-      <td className="action-data">
+      {/* <td className="action-data">
         <button
           onClick={() => {
             setDisplayEdit((prev) => !prev);
@@ -33,7 +33,7 @@ function RowData({ course, progress }) {
         <button>
           <i class="fa-solid fa-trash"></i>
         </button>
-      </td>
+      </td> */}
     </tr>
   );
 }

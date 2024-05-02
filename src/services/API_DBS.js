@@ -12,6 +12,8 @@ const DELETE_TEACHER = "http://localhost:8080/api/v1/lecturers/";
 const GET_COURSES = "http://localhost:8080/api/v1/courses/";
 const POST_COURSE = "http://localhost:8080/api/v1/courses/create-course";
 
+const POST_ORDER = "http://localhost:8080/api/v1/orders/create-order";
+
 export const get_Student = async () => {
   const response = await fetch(GET_STUDENT);
   return response.json();
@@ -153,4 +155,22 @@ export const delete_Course = async (idData) => {
     throw new Error("Network response was not ok" + response.statusText);
   }
   return response.json();
+};
+
+export const get_TeaCourse = async (lecturerId) => {
+  const url = GET_TEACHER + lecturerId + "/courses";
+  const response = await fetch(url);
+  return response.json();
+};
+
+export const post_order = async (data) => {
+  const response = await fetch(POST_ORDER, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const post = await response.json();
+  return post;
 };

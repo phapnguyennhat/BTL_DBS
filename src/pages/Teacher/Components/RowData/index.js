@@ -48,15 +48,22 @@ function RowData({
           </button>
           <ul class="dropdown-menu" style={{}}>
             <li>
-              <a class="dropdown-item" href="">
+              <button
+                onClick={() =>
+                  navigate("courses", {
+                    state: { lectureId: lectureId },
+                  })
+                }
+                class="dropdown-item"
+              >
                 DS Khóa Học
-              </a>
+              </button>
             </li>
-            <li>
+            {/* <li>
               <a class="dropdown-item" href="#">
                 DS RoadMap
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </td>

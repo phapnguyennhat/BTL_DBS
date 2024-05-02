@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { get_courses } from "~/services/API_DBS";
 import RowData from "./Components/RowData";
 import ModalCourse from "./Components/ModalCourse";
+import ConfirmDelete from "~/Components/ConfirmDelete";
 
 function Courses() {
   const [displayModal, setDisplayModal] = useState(false);
@@ -63,7 +64,7 @@ function Courses() {
           <th>Trình Độ Yêu Cầu</th>
           <th>Giá</th>
           <th>ID Giảng Viên</th>
-          <th>Ngôn Ngữ</th>
+          <th style={{ width: "100px" }}>Ngôn Ngữ</th>
           <th>Thao Tác</th>
         </thead>
         <tbody>
@@ -84,6 +85,16 @@ function Courses() {
           setDisplayModal={setDisplayModal}
           rowToAction={rowToAction}
           dataCourse={dataCourse}
+          setDataCourse={setDataCourse}
+        />
+      )}
+
+      {displayConfirm && (
+        <ConfirmDelete
+          displayConfirm={displayConfirm}
+          setDisplayConfirm={setDisplayConfirm}
+          rowToAction={rowToAction}
+          course
           setDataCourse={setDataCourse}
         />
       )}

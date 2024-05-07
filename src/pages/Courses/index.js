@@ -41,7 +41,7 @@ function Courses() {
         get_courses(inputFilter).then((data) => {
             setDataCourse(data['data'] ?? []);
         });
-    }, []);
+    }, [display]);
     return (
         <div className="content">
             <div className="header-page">
